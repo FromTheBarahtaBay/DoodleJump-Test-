@@ -28,7 +28,8 @@ public class PlayerController
         _leftBound = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)).x;
         _rightBound = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x;
         Events.IsGameStart += StartGame;
-        Events.IsPlayerHited += PlayerIsHited;
+        Events.IsPlayerHited += EndGame;
+        Events.IsGameOver += EndGame;
     }
 
     private void OnUpdate() {
@@ -128,10 +129,11 @@ public class PlayerController
 
     private void OnDisable() {
         Events.IsGameStart -= StartGame;
-        Events.IsPlayerHited -= PlayerIsHited;
+        Events.IsPlayerHited -= EndGame;
+        Events.IsGameOver -= EndGame;
     }
 
-    private void PlayerIsHited() {
+    private void EndGame() {
         _playerRb.velocity = new Vector2(0, _playerRb.velocity.y);
         _isGameStart = false;
         _playerIsHited = true;
